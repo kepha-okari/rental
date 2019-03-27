@@ -5,14 +5,18 @@ use yii\helpers\Html;
 $this->title = 'RentalMS';
 ?>
 <div class="site-index">
-    <?php if(yii::$app->session->hasFlash('message')): ?>
-         <?php echo yii::$app->session->getFlash('message');?>
-    <?php endif; ?>
+
 
     <div class="jumbotron">
         <h2> <span><?php echo count($properties);?></span> PROPERTIES  TO LET</h2>
     </div>
 
+    <?php if(yii::$app->session->hasFlash('message')): ?>
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" dta-dismiss="alert">&times</button> 
+            <?php echo yii::$app->session->getFlash('message');?>       
+        </div>
+    <?php endif; ?>
     <div class="body-content">
         <div>
             
@@ -39,9 +43,9 @@ $this->title = 'RentalMS';
                         <td><?php echo $property->description;?></td>
                         <td><?php echo $property->type;?></td>
                         <td>
-                            <span><?= Html::a('View', ['/site/create'], ['class'=>'btn btn-primary']) ?></span>
-                            <span><?= Html::a('Update', ['/site/create'], ['class'=>'btn btn-success']) ?></span>
-                            <span><?= Html::a('Delete', ['/site/create'], ['class'=>'btn btn-danger']) ?></span>
+                            <span><?= Html::a('View', ['view', 'id'=>$property->id], ['class'=>'btn btn-primary']) ?></span>
+                            <span><?= Html::a('Update', ['update', 'id'=>$property->id], ['class'=>'btn btn-default']) ?></span>
+                            <span><?= Html::a('Delete', ['delete', 'id'=>$property->id], ['class'=>'btn btn-danger']) ?></span>
                         </td>
                     </tr>
                 <?php endforeach;?>
@@ -49,6 +53,7 @@ $this->title = 'RentalMS';
                 <tr>
                     <td>No Record Found</td>
                 </tr>
+
             <?php endif;?>
             
             </tbody>

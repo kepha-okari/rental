@@ -86,6 +86,37 @@ class SiteController extends Controller
         return $this->render('create', ['property' => $property]);
     }
 
+
+    public function actionView($id){
+
+        $property = Properties::findOne($id);
+
+        return $this->render('view', ['property'=>$property]);
+    }
+
+    public function actionUpdate($id){
+
+        $property = Properties::findOne($id);
+
+        if($property->load(Yii::$app->request->post()) && $property->save() ){
+            
+            Yii::$app->getSession()->setFlash('message', 'Property has been update successfully');
+            return $this->redirect(['index', 'id' => $property->id]);
+        }            
+        else {
+            Yii::$app->getSession()->setFlash('message', 'Failed to update property');
+        }
+        return $this->render('update', ['property'=>$property]);
+    }
+
+    public function actionDelete($id){
+        $property = Properties::findOne($id)->delete();
+        if($property){
+            Yii::$app->getSession()->setFlash('message', 'Property has been deleted successfully');
+            return $this->redirect(['index']);
+        }
+    }
+
     /**
      * Login action.
      *
