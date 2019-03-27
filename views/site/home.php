@@ -1,5 +1,5 @@
 <?php
-use yii\helpers\html;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = 'RentalMS';
@@ -7,7 +7,7 @@ $this->title = 'RentalMS';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h3>Tenants!</h3>
     </div>
 
     <div class="body-content">
@@ -30,9 +30,9 @@ $this->title = 'RentalMS';
                     <td>Column content</td>
                     <td>Column content</td>
                     <td>
-                        <span><?=Html::a('View')?></span>
-                        <span><?=Html::a('Edit')?></span>
-                        <span><?=Html::a('Delete')?></span>
+                        <span><?= Html::a('View') ?></span>
+                        <span><?= Html::a('Update') ?></span>
+                        <span><?= Html::a('Delete') ?></span>
                     </td>
                 </tr>
             
