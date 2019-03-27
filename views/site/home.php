@@ -5,36 +5,51 @@ use yii\helpers\Html;
 $this->title = 'RentalMS';
 ?>
 <div class="site-index">
+    <?php if(yii::$app->session->hasFlash('message')): ?>
+         <?php echo yii::$app->session->getFlash('message');?>
+    <?php endif; ?>
 
     <div class="jumbotron">
-        <h3>Tenants!</h3>
+        <h2> <span><?php echo count($properties);?></span> PROPERTIES  TO LET</h2>
     </div>
 
     <div class="body-content">
-
+        <div>
+            
+            <span style="margin-right:40px;"> <?= Html::a('Add Property', ['/site/create'],['class'=>'btn btn-primary'])?> </span> 
+       
+        </div>
         <div class="row">
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Tenant</th>
-                    <th scope="col">Rental Unit</th>
-                    <th scope="col">Location</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">PROPERTY NAME</th>
+                    <th scope="col">LOCATION</th>
+                    <th scope="col">DESCRIPTION</th>
+                    <th scope="col">TYPE</th>
+                    <th scope="col">ACTION</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-active">
-                    <th scope="row">Active</th>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>
-                        <span><?= Html::a('View') ?></span>
-                        <span><?= Html::a('Update') ?></span>
-                        <span><?= Html::a('Delete') ?></span>
-                    </td>
+            <?php if(count($properties) > 0):?>
+                <?php foreach ($properties as $property):?>
+                    <tr class="table-active">
+                        <th scope="row"><?php echo $property->name;?></th>
+                        <td><?php echo $property->location;?></td>
+                        <td><?php echo $property->description;?></td>
+                        <td><?php echo $property->type;?></td>
+                        <td>
+                            <span><?= Html::a('View', ['/site/create'], ['class'=>'btn btn-primary']) ?></span>
+                            <span><?= Html::a('Update', ['/site/create'], ['class'=>'btn btn-success']) ?></span>
+                            <span><?= Html::a('Delete', ['/site/create'], ['class'=>'btn btn-danger']) ?></span>
+                        </td>
+                    </tr>
+                <?php endforeach;?>
+            <?php else:?>
+                <tr>
+                    <td>No Record Found</td>
                 </tr>
+            <?php endif;?>
             
             </tbody>
         </table>

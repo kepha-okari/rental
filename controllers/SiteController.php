@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Properties;
 
 class SiteController extends Controller
 {
@@ -59,9 +60,30 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        return $this->render('home');
+    public function actionIndex(){   
+
+        $properties = Properties::find()->all(); // fetch all the properties from the database
+        return $this->render('home', ['properties' => $properties]); // feed the properties list into the home page
+    
+    }
+
+
+    public function actionCreate(){
+
+        $property = new Properties();
+        $formData = Yii::$app->request->post();
+        if($property->load($formData)){
+            if($property->save()){
+                Yii::$app->getSession()->setFlash('message', 'Property has been added successfully');
+                return $this->redirect(['index']);
+                // return $this->render('home');
+            }
+            else{
+                Yii::$app->getSession()->setFlash('message', 'Failed to add property');
+            }
+
+        }
+        return $this->render('create', ['property' => $property]);
     }
 
     /**
