@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Properties;
+use app\models\Units;
 
 class SiteController extends Controller
 {
@@ -63,6 +64,9 @@ class SiteController extends Controller
     public function actionIndex(){   
 
         $properties = Properties::find()->all(); // fetch all the properties from the database
+        if ($properties === null) {
+            throw new NotFoundHttpException;
+        }
         return $this->render('home', ['properties' => $properties]); // feed the properties list into the home page
     
     }
@@ -71,6 +75,10 @@ class SiteController extends Controller
     public function actionCreate(){
 
         $property = new Properties();
+        if ($property === null) {
+            throw new NotFoundHttpException;
+        }
+
         $formData = Yii::$app->request->post();
         if($property->load($formData)){
             if($property->save()){
@@ -116,6 +124,58 @@ class SiteController extends Controller
             return $this->redirect(['index']);
         }
     }
+
+    public function actionUnits(){
+
+        $units = Units::find()->all();
+        
+        $projected_revenue = 0;
+        foreach ($units as $unit) {
+            $projected_revenue+=$unit->monthly_rent;
+        }
+        
+        return $this->render('units', ['units' => $units, 'projected_revenue' => $projected_revenue]); 
+
+    }
+
+
+
+    public function actionAddUnit(){
+
+        $unit = new Units();
+        $formData = Yii::$app->request->post();
+        if($unit ->load($formData)){
+            if($unit->save()){
+                Yii::$app->getSession()->setFlash('message', 'Property has been added successfully');
+                return $this->redirect(['index']);
+                // return $this->render('home');
+            }
+            else{
+                Yii::$app->getSession()->setFlash('message', 'Failed to add property');
+            }
+
+        }
+        return $this->render('addunit', ['unit' => $unit]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Login action.
