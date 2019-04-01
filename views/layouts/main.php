@@ -31,7 +31,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'RentalMS',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -43,6 +43,7 @@ AppAsset::register($this);
             ['label' => 'Properties', 'url' => ['/site/index']],
             ['label' => 'Add Property', 'url' => ['/site/create']],
             ['label' => 'Units', 'url' => ['/site/units']],
+            ['label' => 'Tenants', 'url' => ['/site/tenants']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

@@ -11,7 +11,7 @@
         private $unit_description;
         private $unit_type;
         private $monthly_rent;
-        private $is_occupied = False;
+        private $is_occupied;
 
         public function rules()
         {

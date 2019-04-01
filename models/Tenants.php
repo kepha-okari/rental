@@ -6,17 +6,18 @@
     use Yii;
     use yii\base\Model;
 
-    class Units extends ActiveRecord
+    class Tenants extends ActiveRecord
     {   
-        private $unit_description;
-        private $unit_type;
-        private $monthly_rent;
-        private $is_occupied;
+        private $tenant_name;
+        private $id_number;
+        private $has_balance;
+        private $balance;
+        private $unit;
 
         public function rules()
         {
             return[
-                [['unit_description', 'unit_type', 'monthly_rent', 'is_occupied'], 'required']
+                [['tenant_name', 'id_number', 'has_balance', 'balance', 'unit'], 'required']
             ];   
         }
             

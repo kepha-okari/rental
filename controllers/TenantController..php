@@ -11,9 +11,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Properties;
 use app\models\Units;
-use app\models\Tenants;
 
-class SiteController extends Controller
+class TenantController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -62,13 +61,10 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex(){   
+    public function actionTenants(){   
 
-        $properties = Properties::find()->all(); // fetch all the properties from the database
-        if ($properties === null) {
-            throw new NotFoundHttpException;
-        }
-        return $this->render('home', ['properties' => $properties]); // feed the properties list into the home page
+        
+        return $this->render('tenants'); // feed the properties list into the home page
     
     }
 
@@ -141,88 +137,37 @@ class SiteController extends Controller
 
 
 
-    public function actionUnit(){
+    public function actionAddUnit(){
 
         $unit = new Units();
         $formData = Yii::$app->request->post();
         if($unit ->load($formData)){
             if($unit->save()){
-                Yii::$app->getSession()->setFlash('message', 'Unit has been added successfully');
-                return $this->redirect(['units']);
+                Yii::$app->getSession()->setFlash('message', 'Property has been added successfully');
+                return $this->redirect(['index']);
+                // return $this->render('home');
             }
             else{
-                Yii::$app->getSession()->setFlash('message', 'Failed to add Unit');
+                Yii::$app->getSession()->setFlash('message', 'Failed to add property');
             }
 
         }
-        return $this->render('createunit', ['unit' => $unit]);
+        return $this->render('addunit', ['unit' => $unit]);
     }
 
 
-// the unit actions
+    public function actionMore(){
 
-    public function actionUnitics($id){
-
-        $unit = Units::findOne($id);
-
-        return $this->render('viewunit', ['unit'=>$unit]);
-    }
-
-
-    public function actionRemove($id){
-        $unit = Units::findOne($id)->delete();
-        if($unit){
-            Yii::$app->getSession()->setFlash('message', 'Unit has been deleted successfully');
-            return $this->redirect(['units']);
+        $units = Units::find()->all();
+        
+        $projected_revenue = 0;
+        foreach ($units as $unit) {
+            $projected_revenue+=$unit->monthly_rent;
         }
+        
+        return $this->render('more', ['units' => $units, 'projected_revenue' => $projected_revenue]); 
+
     }
-
-
-    public function actionUpdateunit($id){
-
-        $unit = Units::findOne($id);
-
-        if($unit->load(Yii::$app->request->post()) && $unit->save() ){
-            
-            Yii::$app->getSession()->setFlash('message', 'Property has been update successfully');
-            return $this->redirect(['index', 'id' => $unit->id]);
-        }            
-        else {
-            Yii::$app->getSession()->setFlash('message', 'Failed to update property');
-        }
-        return $this->render('updateunit', ['unit'=>$unit]);
-    }
-
-
-
-    public function actionTenants(){   
-
-        $tenants = Tenants::find()->all();
-
-        return $this->render('tenants', ['tenants'=>$tenants]); // feed the properties list into the home page
-    
-    }
-
-    public function actionTenant(){
-
-        $tenant = new Tenants();
-        $formData = Yii::$app->request->post();
-        if($tenant ->load($formData)){
-            if($tenant->save()){
-                Yii::$app->getSession()->setFlash('message', 'Tenant has been added successfully');
-                return $this->redirect(['tenants']);
-            }
-            else{
-                Yii::$app->getSession()->setFlash('message', 'Failed to add Unit');
-            }
-
-        }
-        return $this->render('addtenant', ['tenant' => $tenant]);
-    }
-
-
-
-
 
 
 
