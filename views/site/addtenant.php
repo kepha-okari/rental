@@ -9,7 +9,7 @@ use app\models\Tenants;
 $this->title = 'Add tenant';
 ?>
 <div class="site-index">
-    <h2> <span><?php ?></span>  Update Tenant</h2>
+    <h2> <span><?php ?></span>  Add Tenant</h2>
 
     
     <div class="body-content">

@@ -203,6 +203,15 @@ class SiteController extends Controller
     
     }
 
+    // view tenant
+    public function actionViewtenant($id){
+
+        $tenant = Tenants::findOne($id);
+
+        return $this->render('viewtenant', ['tenant'=>$tenant]);
+    }
+
+    // add tenant
     public function actionTenant(){
 
         $tenant = new Tenants();
@@ -215,13 +224,55 @@ class SiteController extends Controller
             else{
                 Yii::$app->getSession()->setFlash('message', 'Failed to add Unit');
             }
-
         }
         return $this->render('addtenant', ['tenant' => $tenant]);
     }
+    //update tenant
 
 
 
+    public function actionTenantupdate($id){
+
+        $tenant = Tenants::findOne($id);
+        $formData = Yii::$app->request->post();
+              if($tenant->load(Yii::$app->request->post()) && $tenant->save() ){
+            
+            Yii::$app->getSession()->setFlash('message', 'Tenant has been update successfully');
+            return $this->redirect(['viewtenant', 'id' => $tenant]);
+        } 
+            else{
+                Yii::$app->getSession()->setFlash('message', 'Failed to add Unit');
+            }
+        
+        return $this->render('updatetenant', ['tenant' => $tenant]);
+    }
+
+    // public function actionTenantupdate($id){
+
+    //     $tenant = Tenants::findOne($id);
+    //     $formData = Yii::$app->request->post();
+    //           if($tenant->load(Yii::$app->request->post()) && $tenant->save() ){
+            
+    //         Yii::$app->getSession()->setFlash('message', 'Property has been update successfully');
+    //         return $this->redirect(['index', 'id' => $tenant->tentid]);
+    //     } 
+    //         else{
+    //             Yii::$app->getSession()->setFlash('message', 'Failed to add Unit');
+    //         }
+    //     }
+    //     return $this->render('updatetenant', ['tenant' => $tenant]);
+    // }
+
+
+  
+
+    public function actionRemovetenant($id){
+        $tenant = Tenants::findOne($id)->delete();
+        if($tenant){
+            Yii::$app->getSession()->setFlash('message', 'Tenant has been deleted successfully');
+            return $this->redirect(['tenants']);
+        }
+    }
 
 
 

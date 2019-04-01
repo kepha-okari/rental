@@ -5,20 +5,20 @@ use yii\helpers\Html;
 $this->title = 'tenant';
 ?>
 <div class="site-index">
-    <h1>View tenant</h1>
+    <h1>View Tenant</h1>
     <div class="body-content">
         <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?php echo $tenant->tenant_description?>
+                    <?php echo $tenant->tenant_name?>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?php echo $tenant->tenant_type?>
+                    <?php echo $tenant->id_number?>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?php echo $tenant->monthly_rent?>
+                    <?php echo $tenant->has_balance?>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?php echo $tenant->is_occupied?>
+                    <?php echo $tenant->balance?>
             </li>
          
         </ul>

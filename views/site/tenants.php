@@ -53,9 +53,9 @@ $this->title = 'Tenants';
                             </td>
                             <td><?php echo $tenant->balance;?></td>
                             <td>
-                                <span><?= Html::a('View', ['view', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-primary']) ?></span>
-                                <span><?= Html::a('Update', ['update', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-default']) ?></span>
-                                <span><?= Html::a('Delete', ['delete', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-danger']) ?></span>
+                                <span><?= Html::a('View', ['viewtenant', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-primary']) ?></span>
+                                <span><?= Html::a('Update', ['tenantupdate', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-default']) ?></span>
+                                <span><?= Html::a('Delete', ['removetenant', 'id'=>$tenant->tenant_id], ['class'=>'btn btn-danger']) ?></span>
                             </td>
                         </tr>
                         <?php $counter += 1;?>
